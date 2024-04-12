@@ -7,8 +7,8 @@ import Divider from '@mui/material/Divider';
 export default function VideoCard({ video }) {
   const navigate = useNavigate();
   const {title, thumbnails, channelTitle, publishedAt} = video.snippet;
-  if (typeof(video.id) !== 'string' && video.id.kind === 'youtube#channel')
-    return;
+  // if (typeof(video.id) !== 'string' && video.id.kind === 'youtube#channel')
+  //   return;
   const videoId = typeof(video.id) === 'string' ? video.id : video.id.videoId;
   return (
     <div>

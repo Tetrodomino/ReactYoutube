@@ -12,8 +12,6 @@ import CardContent from '@mui/material/CardContent';
 import SmallVideoCard from "./SmallVideoCard";
 import { useRelatedVideo } from "../api/youtube";
 
-
-
 export default function RelatedVideo({ id, name }) {
   const { isLoading, error, videos } = useRelatedVideo(id);
 

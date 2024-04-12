@@ -5,7 +5,7 @@ export const useVideo = keyword => {
     const keywordUri = `https://youtube.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet&q=`;
     const popularUri = `https://youtube.googleapis.com/youtube/v3/videos?chart=mostPopular&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet`;
 
-    const { isLoading, error, videos } = useQuery({
+    const { isLoading, error, data: videos } = useQuery({
         queryKey: ['videos', keyword],
         queryFn: async () => {
             const uri = keyword ? keywordUri + keyword : popularUri;
@@ -21,7 +21,7 @@ export const useVideo = keyword => {
 }
 
 export const useChannelInfo = id => {
-    const uri = `https://youtube.googleapis.com/youtube/v3/channel?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=statistics`
+    const uri = `https://youtube.googleapis.com/youtube/v3/channels?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&part=snippet`
     const {data: url} = useQuery({
         queryKey: ['channel', id],
         queryFn: async () => {
@@ -36,7 +36,7 @@ export const useChannelInfo = id => {
 export const useRelatedVideo = channelId => {
     const uri = `https://youtube.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet&channelId=${channelId}`;
 
-    const { isLoading, error, videos } = useQuery({
+    const { isLoading, error, data: videos } = useQuery({
         queryKey: ['relatedVideos', channelId],
         queryFn: async () => {
           return axios
