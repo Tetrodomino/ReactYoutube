@@ -11,18 +11,17 @@ export default function VideoCard({ video }) {
     return;
   const videoId = typeof(video.id) === 'string' ? video.id : video.id.videoId;
   return (
-    <div>
-      <img src={thumbnails.medium.url} alt={title} width={'100%'} style={{maxWidth: 320}} onClick={() => {
+    <div style={{display: "flex", flexDirection: "row", marginTop: '8px'}}>
+      <img src={thumbnails.medium.url} alt={title} width={'100%'} style={{maxWidth: 120, marginRight: '10px'}} onClick={() => {
       navigate(`/videos/watch/${videoId}`, {state: {video:video}})
       }}/>
-      <div>
-        <Typography mt={2} onClick={() => {
+      <div style={{width: '100%'}}>
+        <Typography mt={1} onClick={() => {
         navigate(`/videos/watch/${videoId}`, {state: {video:video}})
-        }} sx={{fontSize: '14px', fontWeight: 'bold'}}>{title}</Typography>
-        <Divider sx={{marginTop: '8px'}} />
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: '8px'}}>
-          <Typography sx={{fontSize: '12px'}}>{channelTitle}</Typography>
-          <Typography sx={{fontSize: '12px'}}>{formatAgo(publishedAt, 'ko')}</Typography>
+        }} sx={{fontSize: '13px'}}>{title}</Typography>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: '5px'}}>
+          <Typography sx={{fontSize: '11px'}}>{channelTitle}</Typography>
+          <Typography sx={{fontSize: '11px'}}>{formatAgo(publishedAt, 'ko')}</Typography>
         </div>
       </div>
     </div>

@@ -6,28 +6,14 @@ import VideoCard from "../components/VideoCard";
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { useVideo } from '../api/youtube';
 
-const keywordUri = `https://youtube.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet&q=`;
-const popularUri = `https://youtube.googleapis.com/youtube/v3/videos?chart=mostPopular&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet`;
+// const keywordUri = `https://youtube.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet&q=`;
+// const popularUri = `https://youtube.googleapis.com/youtube/v3/videos?chart=mostPopular&key=${process.env.REACT_APP_YOUTUBE_API_KEY}&maxResults=25&part=snippet`;
 
 export default function Videos() {
   const {keyword} = useParams();
-  const { isLoading, error, data: videos } = useQuery({
-    queryKey: ['videos', keyword],
-    queryFn: async () => {
-      const uri = keyword ? keywordUri + keyword : popularUri;
-      return axios
-        //.get(`/data/${keyword ? 'search' : 'popular'}.json`)
-        .get(uri)
-        .then(res => res.data.items);
-    },
-    staleTime: 1000 * 60 * 1 // 1분, ms 단위로 지정할 수 있음
-  });
-
-  // useEffect(() => {
-  //   axios.get(`/data/${keyword ? 'search' : 'popular'}.json`)
-  //     .then(res => {setVideos(res.data.items)})
-  // }, []); 
+  const {isLoading, error, videos} = useVideo(keyword);
 
   return (
     <>
