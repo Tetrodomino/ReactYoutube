@@ -7,6 +7,8 @@ import Videos from './pages/Videos';
 import VideoDetail from './pages/VideoDetail';
 import reportWebVitals from './reportWebVitals';
 import SignUp from './pages/SignUp'
+import ProtectedRoute from './pages/ProtectedRoute';
+import ViewRecord from './pages/ViewRecord';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'signUp',
         element: <SignUp />
+      },
+      {
+        path: 'videos/record',
+        element: <ProtectedRoute><ViewRecord /></ProtectedRoute>
       }
     ]
   }

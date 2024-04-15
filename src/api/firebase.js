@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, GithubAuthProvider, signInWithPopup, signOut} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GithubAuthProvider, signInWithPopup,
+    updateProfile, signOut, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 
 
 const firebaseConfig = {
@@ -13,22 +14,35 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app);
+const auth = getAuth();
 
-export async function register({email, password}) {
-    return createUserWithEmailAndPassword(auth, email, password)
-    .then(result => result.user)
-    .catch(console.error); // 에거라 뜨면 콘솔창에 에러 띄우기 (요소가 error이므로 함수의 형태를 하지 않고 그냥 error도 가능)
+// 유저 등록
+export function register({email, password, name, photo}) {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+        updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo
+        })
+    })
+    .then(() => {logout()}) // 등록 후 로그아웃시키기
+    .catch(console.error); // 에러가 뜨면 콘솔창에 에러 띄우기 (요소가 error이므로 함수의 형태를 하지 않고 그냥 error도 가능)
 }
 
-export async function loginWithGithub() {
+export function login({ email, password }) {
+    signInWithEmailAndPassword(auth, email, password)
+        .catch(console.error);
+}
+
+export function loginWithGithub() {
     const provider = new GithubAuthProvider();
-    const auth = getAuth();
-    return signInWithPopup(auth, provider)
-    .then(result => result.user)
-    .catch(console.error);
+    signInWithPopup(auth, provider).catch(console.error);
 }
 
-export async function logout() {
-    return signOut(auth).then(() => null).catch(console.error);
+export function logout() {
+    signOut(auth).catch(console.error);
+}
+export function onUserStateChanged(callback) {
+    onAuthStateChanged(auth, (user) => {
+        callback(user);
+    });
 }
