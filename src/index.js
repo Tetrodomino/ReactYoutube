@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound';
 import Videos from './pages/Videos';
 import VideoDetail from './pages/VideoDetail';
 import reportWebVitals from './reportWebVitals';
+import SignUp from './pages/SignUp'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'videos/watch/:videoId',
         element: <VideoDetail />
+      },
+      {
+        path: 'signUp',
+        element: <SignUp />
       }
     ]
   }
