@@ -15,6 +15,7 @@ export default function SignUp() {
     const handleSubmit = e => {
         e.preventDefault();
         // 제출 시 유저 정보 등록
+
         register(userInfo)
         navigate('/signIn');
     }
@@ -25,29 +26,30 @@ export default function SignUp() {
     }
 
     const handleUpload = e => {
-        setFile(e.target.files && e.target.files[0]);
-        uploadImage(file).then(url => setUserInfo({...userInfo, ['photo']: url}))
+        setFile(e.target.files[0]);
+        uploadImage(e.target.files[0]).then(url => setUserInfo({...userInfo, ['photo']: url}))
     }
 
     return (
         <div style={{margin: '50px'}}>
             <form onSubmit={handleSubmit}>
                 <input type="email" name="email" value={userInfo.email}
-                onChange={handleChange} />
+                onChange={handleChange} required/>
                 <br />
                 <input type="password" name="password" value={userInfo.password}
-                onChange={handleChange} />
+                onChange={handleChange} required/>
                 <br />
                 <input type="text" name="name" value={userInfo.name}
-                onChange={handleChange} />
+                onChange={handleChange} required/>
                 <br />
-                <input type="file" accept="image/*" name="file" onChange={handleUpload} />
+                <input type="file" accept="image/*" name="file" onChange={handleUpload} required/>
                 <br />
                 <button onClick={handleSubmit}>사용자 등록</button>
             </form><br />
             <span>계정이 있을 경우 </span>
             <Link to='/signIn'>로그인</Link><br />
             <button onClick={handleGithub}>깃허브 로그인</button>
+            {file && (<img src={URL.createObjectURL(file)} alt='photo' />)}
         </div>
     )
 }
